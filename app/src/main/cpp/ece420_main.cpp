@@ -52,18 +52,22 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     // Keep all of your code changes within java/MainActivity and cpp/ece420_*
     // ********************* START YOUR CODE HERE *********************** //
 
-    //window the frame
+    // Window the frame
     for(int i =0; i<FRAME_SIZE;i++){
         bufferIn[i] = bufferIn[i] * .54 - .46*cos((2*M_PI*i)/(FRAME_SIZE-1));
     }
 
-    //zero pad
+    // Zero pad
     float s_pad[FRAME_SIZE * ZP_FACTOR] = {};
+    float magnitude[FRAME_SIZE] = {};
 
+    // Fill in the zero_pad with data from the microphone
     for(int i=0; i<FRAME_SIZE; i++){
         s_pad[i] = bufferIn[i];
+        magnitude[i] = 0;
     }
 
+    // The following is to for creating a STFT
     int nfft = FRAME_SIZE * ZP_FACTOR;
     int is_inverse_fft = 0;
     kiss_fft_cpx cx_in[FRAME_SIZE * ZP_FACTOR] = {};   //input to be FFT'd
@@ -81,19 +85,31 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     }
     kiss_fft( cfg , cx_in , cx_out );
     free(cfg);
+    // end of the STFT
+    // implementation of spectral subtraction begins here
+    // just copy and paste my proposal demo code translating from python to c++
 
-    //cx_out is our FFT'd signal
 
-    float max = -FLT_MAX;
+    float maxVal = -FLT_MAX;
+
+    float mean = 0;
+    float floor = 1000;
     for(int i=0; i<nfft/2; i++){
-        fftOut[i] = log10(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i);
-        if(fftOut[i]>max){
-            max = fftOut[i];
-        }
+        //fftOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
+        magnitude[i] = abs(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i); // Compute magnitude power spectrum
+        mean += magnitude[i] / 2; // Computes noise floor estimate
+        if(magnitude[i]>maxVal){maxVal = magnitude[i];} // Peak detection
     }
-
+    mean /= (nfft/2);
+    //float noise_max;
+    for (int i=0; i<nfft/2; i++){
+        //compute noise magnitude spectrum
+        fftOut[i] = sqrt(fmax(magnitude[i] - floor,0));
+        fftOut[i] = fmax(magnitude[i] - fftOut[i], 0);
+    }
+    // The following for normalizing between 0 and 1
     for(int i=0; i<nfft/2; i++){
-        fftOut[i] = fftOut[i]/max;
+        fftOut[i] = fftOut[i]/maxVal;
     }
 
     // thread-safe

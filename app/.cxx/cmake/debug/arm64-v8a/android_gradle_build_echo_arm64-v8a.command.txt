@@ -1,0 +1,7 @@
+Executable : C:\Users\cardi\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\ninja.exe
+arguments : 
+-C
+C:\Users\cardi\Documents\senior_22-23\ECE420\ECE420Final\app\.cxx\cmake\debug\arm64-v8a
+echo
+jvmArgs : 
+

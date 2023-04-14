@@ -1,0 +1,14 @@
+# ninja log v5
+1	866	703140031	CMakeFiles/echo.dir/kiss_fft/kiss_fft.c.o	3d9adab1d0426702
+73	1557	703140031	CMakeFiles/echo.dir/ece420_lib.cpp.o	94a9d24bf21bd9d0
+45	1922	703140032	CMakeFiles/echo.dir/audio_player.cpp.o	f168074621c37bdd
+12	1968	703140032	CMakeFiles/echo.dir/audio_common.cpp.o	dc8273b8ef919d3
+56	2065	703140032	CMakeFiles/echo.dir/audio_main.cpp.o	7171e27de832012
+85	2098	703140032	CMakeFiles/echo.dir/ece420_main.cpp.o	e7dc07c465358e8
+22	2115	703140032	CMakeFiles/echo.dir/debug_utils.cpp.o	868f9248bf091bc8
+35	2184	703140032	CMakeFiles/echo.dir/audio_recorder.cpp.o	9bf22c17144e39ed
+2184	2875	703140033	C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/build/intermediates/cmake/debug/obj/arm64-v8a/libecho.so	36735ae640f8108e
+6	1248	703146086	CMakeFiles/echo.dir/ece420_main.cpp.o	e7dc07c465358e8
+1248	1991	703146087	C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/build/intermediates/cmake/debug/obj/arm64-v8a/libecho.so	36735ae640f8108e
+8	1017	703146143	CMakeFiles/echo.dir/ece420_main.cpp.o	e7dc07c465358e8
+1017	1426	703146144	C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/build/intermediates/cmake/debug/obj/arm64-v8a/libecho.so	36735ae640f8108e

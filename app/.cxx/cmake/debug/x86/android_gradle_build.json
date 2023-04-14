@@ -1,0 +1,83 @@
+{
+  "stringTable": {
+    "0": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/x86",
+    "1": "--target=i686-none-linux-android23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Decho_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info -fPIC",
+    "2": "--target=i686-none-linux-android23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Decho_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O0 -fno-limit-debug-info -fPIC"
+  },
+  "buildFiles": [
+    "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ndk-stl-config.cmake",
+    "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\.cxx\\cmake\\debug\\x86\" clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\.cxx\\cmake\\debug\\x86\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "echo-Debug-x86": {
+      "buildCommand": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\.cxx\\cmake\\debug\\x86\" echo",
+      "buildType": "debug",
+      "toolchain": "3499420500",
+      "abi": "x86",
+      "artifactName": "echo",
+      "files": [
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_common.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_main.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_player.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_recorder.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\debug_utils.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ece420_lib.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ece420_main.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\kiss_fft\\kiss_fft.c",
+          "flagsOrdinal": 2,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\build\\intermediates\\cmake\\debug\\obj\\x86\\libecho.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "3499420500": {
+      "cCompilerExecutable": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe",
+      "cppCompilerExecutable": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [
+    "c"
+  ],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}
