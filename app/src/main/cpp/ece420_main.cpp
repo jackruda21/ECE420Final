@@ -23,13 +23,20 @@ Java_com_ece420_lab3_MainActivity_getFftBuffer(JNIEnv *env, jclass, jobject buff
 //allows usage of cmath constants
 #define _USE_MATH_DEFINES
 
+// how sensitive algo should be, will ignore below mean + SENSE * stDevDev
+#define SENSE .25
+
 // Variable to store final FFT output
 float fftOut[FFT_SIZE] = {};
 bool isWritingFft = false;
 
+// First frame flag so we know when to actually create threshhold
+int first_frame = 10;
+float mean = 0;
+float stDev = 0;
+
 void ece420ProcessFrame(sample_buf *dataBuf) {
     isWritingFft = false;
-
     // Keep in mind, we only have 20ms to process each buffer!
     struct timeval start;
     struct timeval end;
@@ -82,8 +89,53 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     kiss_fft( cfg , cx_in , cx_out );
     free(cfg);
 
-    //cx_out is our FFT'd signal
+    float min = FLT_MAX;
+    float max = -FLT_MAX;
+    //make output dB scale and find min and max
+    for(int i=0; i<nfft/2; i++){
+        fftOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
+        if(fftOut[i]<min){
+            min = fftOut[i];
+        }
+        if(fftOut[i]>max){
+            max = fftOut[i];
+        }
+    }
 
+    //cx_out is our FFT'd signal
+    //calculate mean and standard deviation
+    if(first_frame){
+        float sum = 0.0;
+        for (int i = 0; i < nfft/2; i++) {
+            sum += fftOut[i];
+        }
+        mean = sum/(nfft/2);
+        for (int i = 0; i < nfft/2; i++) {
+            stDev += pow(fftOut[i] - mean, 2);
+        }
+        //stDev = sqrt(stDev);
+        if(first_frame > 0){
+            first_frame --;
+        }
+    }
+    LOGD("Mean: %f, Max: %f, Min: %f, stDev: %f", mean, max, min, stDev);
+
+
+    // Smoothing filter ... ignore for now
+
+    //apply masking
+    float thresh = mean + SENSE * stDev;
+    for (int i = 0; i < nfft/2; i++) {
+        if(fftOut[i] < thresh){
+            fftOut[i] = 0; //(min < 0 ? 0 : min); //for visualization, just set it = to 0
+            cx_out[i].i = 0;
+            cx_out[i].r = min;
+        }
+        fftOut[i] = fftOut[i]/max;
+    }
+
+
+/*
     float max = -FLT_MAX;
     for(int i=0; i<nfft/2; i++){
         fftOut[i] = log10(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i);
@@ -91,10 +143,13 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
             max = fftOut[i];
         }
     }
-
+*/
+/*
     for(int i=0; i<nfft/2; i++){
         fftOut[i] = fftOut[i]/max;
     }
+
+*/
 
     // thread-safe
     isWritingFft = true;
