@@ -24,7 +24,7 @@ Java_com_ece420_lab3_MainActivity_getFftBuffer(JNIEnv *env, jclass, jobject buff
 #define _USE_MATH_DEFINES
 
 // how sensitive algo should be, will ignore below mean + SENSE * stDevDev
-#define SENSE .25
+#define SENSE 1.5
 
 // Variable to store final FFT output
 float fftOut[FFT_SIZE] = {};
@@ -60,10 +60,10 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     // ********************* START YOUR CODE HERE *********************** //
 
     //window the frame
+
     for(int i =0; i<FRAME_SIZE;i++){
         bufferIn[i] = bufferIn[i] * .54 - .46*cos((2*M_PI*i)/(FRAME_SIZE-1));
     }
-
     //zero pad
     float s_pad[FRAME_SIZE * ZP_FACTOR] = {};
 
@@ -77,6 +77,8 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     kiss_fft_cpx cx_out[FRAME_SIZE * ZP_FACTOR] = {};  //FFT'd output
 
     kiss_fft_cfg cfg = kiss_fft_alloc( nfft ,is_inverse_fft,0,0);
+
+
     for(int i=0; i<nfft; i++){
 
         // put kth sample in cx_in[k].r and cx_in[k].i
@@ -113,7 +115,7 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
         for (int i = 0; i < nfft/2; i++) {
             stDev += pow(fftOut[i] - mean, 2);
         }
-        //stDev = sqrt(stDev);
+        stDev = sqrt(stDev/(nfft/2));
         if(first_frame > 0){
             first_frame --;
         }
@@ -150,6 +152,24 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     }
 
 */
+
+
+
+    //audio playback
+
+    //ifft
+    is_inverse_fft = 1;
+    cfg = kiss_fft_alloc( nfft ,is_inverse_fft,0,0);
+    kiss_fft( cfg , cx_out , cx_in );
+    free(cfg);
+
+    uint16_t outmag = 0;
+    //set output buffer
+    for(int i=0; i<FRAME_SIZE; i++){
+        outmag = (uint16_t)sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i);
+        dataBuf->buf_[2*i] = (uint8_t)outmag;
+        dataBuf->buf_[2*i+1] = (uint8_t)(outmag>>8);
+    }
 
     // thread-safe
     isWritingFft = true;
