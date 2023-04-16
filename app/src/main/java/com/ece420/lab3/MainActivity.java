@@ -60,6 +60,7 @@ public class MainActivity extends Activity
     Bitmap bitmap;
     Canvas canvas;
     Paint paint;
+
     // Static Values
     private static final int AUDIO_ECHO_REQUEST = 0;
     private static final int FRAME_SIZE = 1024;

@@ -174,7 +174,6 @@
       "project": {
         "compilerSettingsCacheFolder": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\.cxx",
         "cxxFolder": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\.cxx",
-        "ideBuildTargetAbi": "arm64-v8a,armeabi-v7a,armeabi",
         "isBuildOnlyTargetAbiEnabled": true,
         "isCmakeBuildCohabitationEnabled": false,
         "isNativeCompilerSettingsCacheEnabled": false,
@@ -198,7 +197,10 @@
     "objFolder": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\build\\intermediates\\cmake\\debug\\obj",
     "variantName": "debug",
     "validAbiList": [
-      "ARM64_V8A"
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
     ],
     "prefabDirectory": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\.cxx\\cmake\\debug\\prefab",
     "prefabPackageDirectoryList": []
