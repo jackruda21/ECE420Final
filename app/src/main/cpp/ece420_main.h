@@ -12,5 +12,5 @@
 #include "buf_manager.h"
 
 void ece420ProcessFrame(sample_buf *dataBuf);
-
+void wienerFilter(sample_buf *dataBuf);
 #endif //ECE420_MAIN_H

@@ -36,7 +36,7 @@ void AudioRecorder::ProcessSLCallback(SLAndroidSimpleBufferQueueItf bq) {
     dataBuf->size_ = dataBuf->cap_;           //device only calls us when it is really full
 
     // Call ece420 methods to modify dataBuf contents before push to play
-    ece420ProcessFrame(dataBuf);
+    wienerFilter(dataBuf);
 
     recQueue_->push(dataBuf);
 
