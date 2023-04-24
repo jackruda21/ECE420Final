@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     // UI Variables
     private Button subButton;
     private Button gateButton;
-    private Button weinerButton;
+    private Button wienerButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Setup Button for Wiener Filter
-        weinerButton = (Button) findViewById(R.id.wiener);
-        weinerButton.setOnClickListener(new View.OnClickListener() {
+        wienerButton = (Button) findViewById(R.id.wiener);
+        wienerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 appFlag = 3;

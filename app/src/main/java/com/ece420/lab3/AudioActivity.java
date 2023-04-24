@@ -64,7 +64,7 @@ public class AudioActivity extends Activity
     Canvas canvas;
     Paint paint;
 
-    private TextView textFiltered;
+    private TextView textUnfiltered;
 
     // Static Values
     private static final int AUDIO_ECHO_REQUEST = 0;
@@ -80,10 +80,10 @@ public class AudioActivity extends Activity
 
 
 
-        textFiltered = (TextView) findViewById(R.id.Filtered);
-        if(MainActivity.appFlag == 1) textFiltered.setText("Spectral Subtraction");
-        else if(MainActivity.appFlag == 2) textFiltered.setText("Spectral Gating");
-        else if(MainActivity.appFlag == 3) textFiltered.setText("Wiener Filter");
+        textUnfiltered = (TextView) findViewById(R.id.unfiltered);
+        if(MainActivity.appFlag == 1) textUnfiltered.setText("Spectral Subtraction");
+        else if(MainActivity.appFlag == 2) textUnfiltered.setText("Spectral Gating");
+        else if(MainActivity.appFlag == 3) textUnfiltered.setText("Wiener Filter");
 
         // Google NDK Stuff
         queryNativeAudioParameters();
@@ -285,6 +285,8 @@ public class AudioActivity extends Activity
             FloatBuffer buffer = ByteBuffer.allocateDirect(FRAME_SIZE * 4)
                     .order(ByteOrder.LITTLE_ENDIAN)
                     .asFloatBuffer();
+
+
 
             getFftBuffer(buffer);
 

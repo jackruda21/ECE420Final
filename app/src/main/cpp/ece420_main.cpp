@@ -136,8 +136,8 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
 
 
 // http://stackoverflow.com/questions/34168791/ndk-work-with-floatbuffer-as-parameter
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr) {
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr) {
     jfloat *buffer = (jfloat *) env->GetDirectBufferAddress(bufferPtr);
     // thread-safe, kinda
     while (isWritingFft) {}
