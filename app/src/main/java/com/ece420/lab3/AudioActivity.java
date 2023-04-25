@@ -58,13 +58,16 @@ public class AudioActivity extends Activity
     boolean supportRecording;
     Boolean isPlaying = false;
     ImageView stftView;
-
-    ImageView stftView2;
     Bitmap bitmap;
     Canvas canvas;
     Paint paint;
 
-    private TextView textUnfiltered;
+    ImageView stftView2;
+    Bitmap bitmap2;
+    Canvas canvas2;
+    Paint paint2;
+
+    private TextView textFiltered;
 
     // Static Values
     private static final int AUDIO_ECHO_REQUEST = 0;
@@ -80,10 +83,10 @@ public class AudioActivity extends Activity
 
 
 
-        textUnfiltered = (TextView) findViewById(R.id.unfiltered);
-        if(MainActivity.appFlag == 1) textUnfiltered.setText("Spectral Subtraction");
-        else if(MainActivity.appFlag == 2) textUnfiltered.setText("Spectral Gating");
-        else if(MainActivity.appFlag == 3) textUnfiltered.setText("Wiener Filter");
+        textFiltered = (TextView) findViewById(R.id.unfiltered);
+        if(MainActivity.appFlag == 1) textFiltered.setText("Spectral Subtraction");
+        else if(MainActivity.appFlag == 2) textFiltered.setText("Spectral Gating");
+        else if(MainActivity.appFlag == 3) textFiltered.setText("Wiener Filter");
 
         // Google NDK Stuff
         queryNativeAudioParameters();
@@ -96,7 +99,6 @@ public class AudioActivity extends Activity
 
         // UI Variables and Setup
         stftView = (ImageView) this.findViewById(R.id.rawView);
-        stftView2 = (ImageView) this.findViewById(R.id.stftView);
         bitmap =  Bitmap.createBitmap((FRAME_SIZE), BITMAP_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         canvas.drawColor(Color.BLACK);
@@ -104,7 +106,15 @@ public class AudioActivity extends Activity
         paint.setColor(Color.GREEN);
         paint.setStyle(Paint.Style.FILL);
         stftView.setImageBitmap(bitmap);
-        stftView.setImageBitmap(bitmap);
+
+        stftView2 = (ImageView) this.findViewById(R.id.stftView);
+        bitmap2 = Bitmap.createBitmap((FRAME_SIZE), BITMAP_HEIGHT, Bitmap.Config.ARGB_8888);
+        canvas2 = new Canvas(bitmap2);
+        canvas2.drawColor(Color.BLACK);
+        paint2  = new Paint();
+        paint2.setColor(Color.GREEN);
+        paint2.setStyle(Paint.Style.FILL);
+        stftView2.setImageBitmap(bitmap2);
         initializeStftBackgroundThread(10);
 
         // Copied from OnClick handler
@@ -286,12 +296,16 @@ public class AudioActivity extends Activity
                     .order(ByteOrder.LITTLE_ENDIAN)
                     .asFloatBuffer();
 
-
+            FloatBuffer cleanBuff = ByteBuffer.allocateDirect(FRAME_SIZE * 4)
+                    .order(ByteOrder.LITTLE_ENDIAN)
+                    .asFloatBuffer();
 
             getFftBuffer(buffer);
+            getFftBufferClean(cleanBuff);
 
             // Update screen, needs to be done on UI thread
             publishProgress(buffer);
+            publishProgress(cleanBuff);
 
             return null;
         }
@@ -305,37 +319,77 @@ public class AudioActivity extends Activity
             destRect.offset(0, -1);
             canvas.drawBitmap(bitmap, srcRect, destRect, null);
 
+            Rect srcRect2 = new Rect(0, -(-1), bitmap2.getWidth(), bitmap2.getHeight());
+            Rect destRect2 = new Rect(srcRect2);
+            destRect2.offset(0, -1);
+            canvas2.drawBitmap(bitmap2, srcRect2, destRect2, null);
+
             // update latest column with new values which need to be between 0.0 and 1.0
-            for(int i=0;i < newDisplayUpdate[0].capacity();i++) {
-                double val = newDisplayUpdate[0].get();
+            if (newDisplayUpdate.length > 0){
+                for(int i=0;i < newDisplayUpdate[0].capacity();i++) {
+                    double val = newDisplayUpdate[0].get();
 
-                // simple linear RYGCB colormap
-                if(val <= 0.25) {
-                    r = 0;
-                    b = 255;
-                    g = (int)(4*val*255);
-                } else if(val <= 0.5) {
-                    r = 0;
-                    g = 255;
-                    b = (int)((1-4*(val-0.25))*255);
-                } else if(val <= 0.75) {
-                    g = 255;
-                    b = 0;
-                    r = (int)(4*(val-0.5)*255);
-                } else {
-                    r = 255;
-                    b = 0;
-                    g = (int)((1-4*(val-0.75))*255);
+                    // simple linear RYGCB colormap
+                    if(val <= 0.25) {
+                        r = 0;
+                        b = 255;
+                        g = (int)(4*val*255);
+                    } else if(val <= 0.5) {
+                        r = 0;
+                        g = 255;
+                        b = (int)((1-4*(val-0.25))*255);
+                    } else if(val <= 0.75) {
+                        g = 255;
+                        b = 0;
+                        r = (int)(4*(val-0.5)*255);
+                    } else {
+                        r = 255;
+                        b = 0;
+                        g = (int)((1-4*(val-0.75))*255);
+                    }
+
+                    // set color with constant alpha
+                    paint.setColor(Color.argb(255, r, g, b));
+                    // paint corresponding area
+                    canvas.drawRect(i, BITMAP_HEIGHT-1, i+1, BITMAP_HEIGHT, paint);
                 }
+            }
 
-                // set color with constant alpha
-                paint.setColor(Color.argb(255, r, g, b));
-                // paint corresponding area
-                canvas.drawRect(i, BITMAP_HEIGHT-1, i+1, BITMAP_HEIGHT, paint);
+            if (newDisplayUpdate.length > 1){
+                for(int i=0;i < newDisplayUpdate[1].capacity();i++) {
+                    double val = newDisplayUpdate[1].get();
+
+                    // simple linear RYGCB colormap
+                    if(val <= 0.25) {
+                        r = 0;
+                        b = 255;
+                        g = (int)(4*val*255);
+                    } else if(val <= 0.5) {
+                        r = 0;
+                        g = 255;
+                        b = (int)((1-4*(val-0.25))*255);
+                    } else if(val <= 0.75) {
+                        g = 255;
+                        b = 0;
+                        r = (int)(4*(val-0.5)*255);
+                    } else {
+                        r = 255;
+                        b = 0;
+                        g = (int)((1-4*(val-0.75))*255);
+                    }
+                    // set color with constant alpha
+                    paint2.setColor(Color.argb(255, r, g, b));
+                    // paint corresponding area
+                    canvas2.drawRect(i, BITMAP_HEIGHT-1, i+1, BITMAP_HEIGHT, paint2);
+                }
             }
 
             newDisplayUpdate[0].rewind();
+            if (newDisplayUpdate.length > 1) {
+                newDisplayUpdate[1].rewind();
+            }
             stftView.invalidate();
+            stftView2.invalidate();
         }
     }
 
@@ -361,4 +415,5 @@ public class AudioActivity extends Activity
     public static native void stopPlay();
 
     public static native void getFftBuffer(FloatBuffer buffer);
+    public static native void getFftBufferClean(FloatBuffer buffer);
 }

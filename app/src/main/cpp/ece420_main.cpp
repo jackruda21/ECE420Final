@@ -12,7 +12,12 @@
 // Declare JNI function
 extern "C" {
 JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr);
+Java_com_ece420_lab3_AudioActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr);
+}
+
+extern "C" {
+JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_getFftBufferClean(JNIEnv *env, jclass, jobject bufferPtr);
 }
 
 // FRAME_SIZE is 1024 and we zero-pad it to 2048 to do FFT
@@ -139,10 +144,23 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
 extern "C" JNIEXPORT void JNICALL
 Java_com_ece420_lab3_AudioActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr) {
     jfloat *buffer = (jfloat *) env->GetDirectBufferAddress(bufferPtr);
+
     // thread-safe, kinda
     while (isWritingFft) {}
     // We will only fetch up to FRAME_SIZE data in fftOut[] to draw on to the screen
     for (int i = 0; i < FRAME_SIZE; i++) {
         buffer[i] = fftOut[i];
+    }
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_getFftBufferClean(JNIEnv *env, jclass, jobject bufferPtr) {
+    jfloat *buffer = (jfloat *) env->GetDirectBufferAddress(bufferPtr);
+
+    // thread-safe, kinda
+    while (isWritingFft) {}
+    // We will only fetch up to FRAME_SIZE data in fftOut[] to draw on to the screen
+    for (int i = 0; i < FRAME_SIZE; i++) {
+    buffer[i] = 1;
     }
 }
