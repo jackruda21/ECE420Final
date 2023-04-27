@@ -1,3 +1,3 @@
-C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/x86/CMakeFiles/echo.dir
-C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/x86/CMakeFiles/edit_cache.dir
-C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/x86/CMakeFiles/rebuild_cache.dir
+C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/.cxx/cmake/debug/x86/CMakeFiles/echo.dir
+C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/.cxx/cmake/debug/x86/CMakeFiles/edit_cache.dir
+C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/.cxx/cmake/debug/x86/CMakeFiles/rebuild_cache.dir

@@ -272,6 +272,10 @@ public class AudioActivity extends Activity
                         try {
                             UpdateStftTask performStftUiUpdate = new UpdateStftTask();
                             performStftUiUpdate.execute();
+
+                            //Create and execute 2nd Task
+                            UpdateStftTask2 performStftUiUpdate2 = new UpdateStftTask2();
+                            performStftUiUpdate2.execute();
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                         }
@@ -301,11 +305,11 @@ public class AudioActivity extends Activity
                     .asFloatBuffer();
 
             getFftBuffer(buffer);
-            getFftBufferClean(cleanBuff);
+            //getFftBufferClean(cleanBuff);
 
             // Update screen, needs to be done on UI thread
             publishProgress(buffer);
-            publishProgress(cleanBuff);
+            //publishProgress(cleanBuff);
 
             return null;
         }
@@ -319,76 +323,103 @@ public class AudioActivity extends Activity
             destRect.offset(0, -1);
             canvas.drawBitmap(bitmap, srcRect, destRect, null);
 
-            Rect srcRect2 = new Rect(0, -(-1), bitmap2.getWidth(), bitmap2.getHeight());
-            Rect destRect2 = new Rect(srcRect2);
-            destRect2.offset(0, -1);
-            canvas2.drawBitmap(bitmap2, srcRect2, destRect2, null);
-
             // update latest column with new values which need to be between 0.0 and 1.0
-            if (newDisplayUpdate.length > 0){
-                for(int i=0;i < newDisplayUpdate[0].capacity();i++) {
-                    double val = newDisplayUpdate[0].get();
+            for(int i=0;i < newDisplayUpdate[0].capacity();i++) {
+                double val = newDisplayUpdate[0].get();
 
-                    // simple linear RYGCB colormap
-                    if(val <= 0.25) {
-                        r = 0;
-                        b = 255;
-                        g = (int)(4*val*255);
-                    } else if(val <= 0.5) {
-                        r = 0;
-                        g = 255;
-                        b = (int)((1-4*(val-0.25))*255);
-                    } else if(val <= 0.75) {
-                        g = 255;
-                        b = 0;
-                        r = (int)(4*(val-0.5)*255);
-                    } else {
-                        r = 255;
-                        b = 0;
-                        g = (int)((1-4*(val-0.75))*255);
-                    }
-
-                    // set color with constant alpha
-                    paint.setColor(Color.argb(255, r, g, b));
-                    // paint corresponding area
-                    canvas.drawRect(i, BITMAP_HEIGHT-1, i+1, BITMAP_HEIGHT, paint);
+                // simple linear RYGCB colormap
+                if(val <= 0.25) {
+                    r = 0;
+                    b = 255;
+                    g = (int)(4*val*255);
+                } else if(val <= 0.5) {
+                    r = 0;
+                    g = 255;
+                    b = (int)((1-4*(val-0.25))*255);
+                } else if(val <= 0.75) {
+                    g = 255;
+                    b = 0;
+                    r = (int)(4*(val-0.5)*255);
+                } else {
+                    r = 255;
+                    b = 0;
+                    g = (int)((1-4*(val-0.75))*255);
                 }
-            }
 
-            if (newDisplayUpdate.length > 1){
-                for(int i=0;i < newDisplayUpdate[1].capacity();i++) {
-                    double val = newDisplayUpdate[1].get();
-
-                    // simple linear RYGCB colormap
-                    if(val <= 0.25) {
-                        r = 0;
-                        b = 255;
-                        g = (int)(4*val*255);
-                    } else if(val <= 0.5) {
-                        r = 0;
-                        g = 255;
-                        b = (int)((1-4*(val-0.25))*255);
-                    } else if(val <= 0.75) {
-                        g = 255;
-                        b = 0;
-                        r = (int)(4*(val-0.5)*255);
-                    } else {
-                        r = 255;
-                        b = 0;
-                        g = (int)((1-4*(val-0.75))*255);
-                    }
-                    // set color with constant alpha
-                    paint2.setColor(Color.argb(255, r, g, b));
-                    // paint corresponding area
-                    canvas2.drawRect(i, BITMAP_HEIGHT-1, i+1, BITMAP_HEIGHT, paint2);
-                }
+                // set color with constant alpha
+                paint.setColor(Color.argb(255, r, g, b));
+                // paint corresponding area
+                canvas.drawRect(i, BITMAP_HEIGHT-1, i+1, BITMAP_HEIGHT, paint);
             }
 
             newDisplayUpdate[0].rewind();
-            if (newDisplayUpdate.length > 1) {
-                newDisplayUpdate[1].rewind();
-            }
             stftView.invalidate();
+        }
+    }
+
+    // UI update2
+    private class UpdateStftTask2 extends AsyncTask<Void, FloatBuffer, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            // Float == 4 bytes
+            // Note: We're using FloatBuffer instead of float array because interfacing with JNI
+            // with a FloatBuffer allows direct memory sharing, versus having to copy to some
+            // intermediate location first.
+            // http://stackoverflow.com/questions/10697161/why-floatbuffer-instead-of-float
+
+            FloatBuffer cleanBuff = ByteBuffer.allocateDirect(FRAME_SIZE * 4)
+                    .order(ByteOrder.LITTLE_ENDIAN)
+                    .asFloatBuffer();
+
+            getFftBufferClean(cleanBuff);
+            //getFftBuffer(cleanBuff);
+
+            // Update screen, needs to be done on UI thread
+            publishProgress(cleanBuff);
+
+            return null;
+        }
+
+        protected void onProgressUpdate(FloatBuffer... newDisplayUpdate) {
+            int r,g,b;
+
+            // emulates a scrolling window
+            Rect srcRect = new Rect(0, -(-1), bitmap2.getWidth(), bitmap2.getHeight());
+            Rect destRect = new Rect(srcRect);
+            destRect.offset(0, -1);
+            canvas2.drawBitmap(bitmap2, srcRect, destRect, null);
+
+            // update latest column with new values which need to be between 0.0 and 1.0
+            for(int i=0;i < newDisplayUpdate[0].capacity();i++) {
+                double val = newDisplayUpdate[0].get();
+
+                // simple linear RYGCB colormap
+                if(val <= 0.25) {
+                    r = 0;
+                    b = 255;
+                    g = (int)(4*val*255);
+                } else if(val <= 0.5) {
+                    r = 0;
+                    g = 255;
+                    b = (int)((1-4*(val-0.25))*255);
+                } else if(val <= 0.75) {
+                    g = 255;
+                    b = 0;
+                    r = (int)(4*(val-0.5)*255);
+                } else {
+                    r = 255;
+                    b = 0;
+                    g = (int)((1-4*(val-0.75))*255);
+                }
+
+                // set color with constant alpha
+                paint2.setColor(Color.argb(255, r, g, b));
+                // paint corresponding area
+                canvas2.drawRect(i, BITMAP_HEIGHT-1, i+1, BITMAP_HEIGHT, paint2);
+            }
+
+            newDisplayUpdate[0].rewind();
             stftView2.invalidate();
         }
     }

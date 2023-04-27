@@ -1,0 +1,3 @@
+C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/.cxx/cmake/debug/x86_64/CMakeFiles/echo.dir
+C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/.cxx/cmake/debug/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/.cxx/cmake/debug/x86_64/CMakeFiles/rebuild_cache.dir
