@@ -161,6 +161,6 @@ Java_com_ece420_lab3_AudioActivity_getFftBufferClean(JNIEnv *env, jclass, jobjec
     while (isWritingFft) {}
     // We will only fetch up to FRAME_SIZE data in fftOut[] to draw on to the screen
     for (int i = 0; i < FRAME_SIZE; i++) {
-    buffer[i] = 1;
+    buffer[i] = ((double) rand() / (RAND_MAX));
     }
 }

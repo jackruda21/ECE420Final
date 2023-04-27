@@ -16,6 +16,7 @@
 
 package com.ece420.lab3;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -74,6 +75,7 @@ public class AudioActivity extends Activity
     private static final int FRAME_SIZE = 1024;
     private static final int BITMAP_HEIGHT = 500;
 
+    @SuppressLint({"SetTextI18n", "SourceLockedOrientationActivity"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +100,7 @@ public class AudioActivity extends Activity
         }
 
         // UI Variables and Setup
-        stftView = (ImageView) this.findViewById(R.id.rawView);
+        stftView = (ImageView) this.findViewById(R.id.rawView);     //imageView for the unfiltered stft
         bitmap =  Bitmap.createBitmap((FRAME_SIZE), BITMAP_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         canvas.drawColor(Color.BLACK);
@@ -107,7 +109,7 @@ public class AudioActivity extends Activity
         paint.setStyle(Paint.Style.FILL);
         stftView.setImageBitmap(bitmap);
 
-        stftView2 = (ImageView) this.findViewById(R.id.stftView);
+        stftView2 = (ImageView) this.findViewById(R.id.stftView);   //imageView for the filtered stft
         bitmap2 = Bitmap.createBitmap((FRAME_SIZE), BITMAP_HEIGHT, Bitmap.Config.ARGB_8888);
         canvas2 = new Canvas(bitmap2);
         canvas2.drawColor(Color.BLACK);
@@ -259,6 +261,7 @@ public class AudioActivity extends Activity
         startEcho();
     }
 
+
     // All this does is calls the UpdateStftTask at a fixed interval
     // http://stackoverflow.com/questions/6531950/how-to-execute-async-task-repeatedly-after-fixed-time-intervals
     public void initializeStftBackgroundThread(int timeInMs) {
@@ -270,7 +273,7 @@ public class AudioActivity extends Activity
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            UpdateStftTask performStftUiUpdate = new UpdateStftTask();
+                            UpdateStftTask performStftUiUpdate = new UpdateStftTask(stftView, stftView2);
                             performStftUiUpdate.execute();
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
@@ -284,6 +287,15 @@ public class AudioActivity extends Activity
 
     // UI update
     private class UpdateStftTask extends AsyncTask<Void, FloatBuffer, Void> {
+
+        private ImageView mStftView;
+        private ImageView mStftView2;
+
+        public UpdateStftTask(ImageView stftView, ImageView stftView2) {
+            mStftView = stftView;
+            mStftView2 = stftView2;
+        }
+
         @Override
         protected Void doInBackground(Void... params) {
 
@@ -304,13 +316,14 @@ public class AudioActivity extends Activity
             getFftBufferClean(cleanBuff);
 
             // Update screen, needs to be done on UI thread
-            publishProgress(buffer);
-            publishProgress(cleanBuff);
+            publishProgress(cleanBuff, buffer);
 
             return null;
         }
 
         protected void onProgressUpdate(FloatBuffer... newDisplayUpdate) {
+            //FloatBuffer buffer = (FloatBuffer) newDisplayUpdate[0];
+            //FloatBuffer cleanbuff = (FloatBuffer) newDisplayUpdate[1];
             int r,g,b;
 
             // emulates a scrolling window
@@ -323,6 +336,8 @@ public class AudioActivity extends Activity
             Rect destRect2 = new Rect(srcRect2);
             destRect2.offset(0, -1);
             canvas2.drawBitmap(bitmap2, srcRect2, destRect2, null);
+
+
 
             // update latest column with new values which need to be between 0.0 and 1.0
             if (newDisplayUpdate.length > 0){
