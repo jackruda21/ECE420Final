@@ -34,6 +34,10 @@ Java_com_ece420_lab3_AudioActivity_getFftBufferClean(JNIEnv *env, jclass, jobjec
 // how sensitive algo should be, will ignore below mean + SENSE * stDevDev
 #define SENSE 1.5
 
+
+// Variable to store noisy FFT output
+float cleanOut[FFT_SIZE] = {};
+
 // Variable to store final FFT output
 float fftOut[FFT_SIZE] = {};
 bool isWritingFft = false;
@@ -107,6 +111,7 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     float max = -FLT_MAX;
     //make output dB scale and find min and max
     for(int i=0; i<nfft/2; i++){
+        cleanOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
         fftOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
         if(fftOut[i]<min){
             min = fftOut[i];
@@ -398,15 +403,7 @@ w, h_response  = signal.freqz(np.flipud(h))
 
 xw = signal.lfilter(np.array(np.flipud(h).T)[0],[1],np.array(y.T)[0])
 */
-
-
-
 }
-
-
-
-
-
 
 // http://stackoverflow.com/questions/34168791/ndk-work-with-floatbuffer-as-parameter
 extern "C" JNIEXPORT void JNICALL
@@ -429,6 +426,6 @@ Java_com_ece420_lab3_AudioActivity_getFftBufferClean(JNIEnv *env, jclass, jobjec
     while (isWritingFft) {}
     // We will only fetch up to FRAME_SIZE data in fftOut[] to draw on to the screen
     for (int i = 0; i < FRAME_SIZE; i++) {
-    buffer[i] = 1;
+        buffer[i] = cleanOut[i];
     }
 }

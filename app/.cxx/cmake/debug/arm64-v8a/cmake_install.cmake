@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/src/main/cpp
+# Install script for directory: C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/src/main/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/.cxx/cmake/debug/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
