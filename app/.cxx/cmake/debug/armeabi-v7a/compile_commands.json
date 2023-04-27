@@ -1,0 +1,49 @@
+[
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\audio_common.cpp.o -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_common.cpp",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_common.cpp"
+},
+
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\audio_main.cpp.o -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_main.cpp",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_main.cpp"
+},
+
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\audio_player.cpp.o -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_player.cpp",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_player.cpp"
+},
+
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\audio_recorder.cpp.o -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_recorder.cpp",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\audio_recorder.cpp"
+},
+
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\debug_utils.cpp.o -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\debug_utils.cpp",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\debug_utils.cpp"
+},
+
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security  -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\kiss_fft\\kiss_fft.c.o   -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\kiss_fft\\kiss_fft.c",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\kiss_fft\\kiss_fft.c"
+},
+
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\ece420_lib.cpp.o -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ece420_lib.cpp",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ece420_lib.cpp"
+},
+
+{
+  "directory": "C:/Users/cardi/Documents/senior_22-23/ECE420/ECE420Final/app/.cxx/cmake/debug/armeabi-v7a",
+  "command": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=armv7-none-linux-androideabi23 --gcc-toolchain=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/cardi/AppData/Local/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/windows-x86_64/sysroot  -Decho_EXPORTS  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -std=c++11 -Wall -Werror -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles\\echo.dir\\ece420_main.cpp.o -c C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ece420_main.cpp",
+  "file": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ece420_main.cpp"
+}
+]

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="com.ece420.lab3.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Audio Processing"
+        android:id="@+id/MainTitle"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Filter method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:id="@+id/SubTitle1"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+        android:layout_below="@+id/MainTitle"
+        android:layout_alignStart="@+id/MainTitle" />
+
+    <Button
+        android:id="@+id/wiener"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SubTitle1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
+        android:text="Wiener Filter" />
+
+    <TextView
+        android:text="Spectral Methods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SubTitle2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_marginTop="66dp"
+        android:layout_below="@+id/wiener"
+        android:layout_alignStart="@+id/SubTitle1" />
+
+    <Button
+        android:text="Spectral Subtraction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="71dp"
+        android:id="@+id/specSub"
+        android:layout_below="@+id/SubTitle2"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/specGate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/specSub"
+        android:layout_marginTop="56dp"
+        android:layout_centerHorizontal="true"
+        android:text="Spectral Gating" />
+
+</RelativeLayout>

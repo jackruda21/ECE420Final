@@ -15,7 +15,12 @@
 // Declare JNI function
 extern "C" {
 JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr);
+Java_com_ece420_lab3_AudioActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr);
+}
+
+extern "C" {
+JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_getFftBufferClean(JNIEnv *env, jclass, jobject bufferPtr);
 }
 
 // FRAME_SIZE is 1024 and we zero-pad it to 2048 to do FFT
@@ -69,11 +74,15 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     }
     //zero pad
     float s_pad[FRAME_SIZE * ZP_FACTOR] = {};
+    float magnitude[FRAME_SIZE] = {};
 
+    // Fill in the zero_pad with data from the microphone
     for(int i=0; i<FRAME_SIZE; i++){
         s_pad[i] = bufferIn[i];
+        magnitude[i] = 0;
     }
 
+    // The following is to for creating a STFT
     int nfft = FRAME_SIZE * ZP_FACTOR;
     int is_inverse_fft = 0;
     kiss_fft_cpx cx_in[FRAME_SIZE * ZP_FACTOR] = {};   //input to be FFT'd
@@ -143,10 +152,17 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
 /*
     float max = -FLT_MAX;
     for(int i=0; i<nfft/2; i++){
-        fftOut[i] = log10(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i);
-        if(fftOut[i]>max){
-            max = fftOut[i];
-        }
+        //fftOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
+        magnitude[i] = abs(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i); // Compute magnitude power spectrum
+        mean += magnitude[i] / 2; // Computes noise floor estimate
+        if(magnitude[i]>maxVal){maxVal = magnitude[i];} // Peak detection
+    }
+    mean /= (nfft/2);
+    //float noise_max;
+    for (int i=0; i<nfft/2; i++){
+        //compute noise magnitude spectrum
+        fftOut[i] = sqrt(fmax(magnitude[i] - floor,0));
+        fftOut[i] = fmax(magnitude[i] - fftOut[i], 0);
     }
 */
 /*
@@ -393,13 +409,26 @@ xw = signal.lfilter(np.array(np.flipud(h).T)[0],[1],np.array(y.T)[0])
 
 
 // http://stackoverflow.com/questions/34168791/ndk-work-with-floatbuffer-as-parameter
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr) {
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_getFftBuffer(JNIEnv *env, jclass, jobject bufferPtr) {
     jfloat *buffer = (jfloat *) env->GetDirectBufferAddress(bufferPtr);
+
     // thread-safe, kinda
     while (isWritingFft) {}
     // We will only fetch up to FRAME_SIZE data in fftOut[] to draw on to the screen
     for (int i = 0; i < FRAME_SIZE; i++) {
         buffer[i] = fftOut[i];
+    }
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_getFftBufferClean(JNIEnv *env, jclass, jobject bufferPtr) {
+    jfloat *buffer = (jfloat *) env->GetDirectBufferAddress(bufferPtr);
+
+    // thread-safe, kinda
+    while (isWritingFft) {}
+    // We will only fetch up to FRAME_SIZE data in fftOut[] to draw on to the screen
+    for (int i = 0; i < FRAME_SIZE; i++) {
+    buffer[i] = 1;
     }
 }

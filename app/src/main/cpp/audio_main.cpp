@@ -66,8 +66,8 @@ JNIEXPORT void JNICALL
         Java_com_ece420_lab3_MainActivity_stopPlay(JNIEnv *env, jclass type);
 }
 
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_createSLEngine(
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_createSLEngine(
         JNIEnv *env, jclass type, jint sampleRate, jint framesPerBuf) {
     SLresult result;
     memset(&engine, 0, sizeof(engine));
@@ -107,8 +107,8 @@ Java_com_ece420_lab3_MainActivity_createSLEngine(
     }
 }
 
-JNIEXPORT jboolean JNICALL
-Java_com_ece420_lab3_MainActivity_createSLBufferQueueAudioPlayer(JNIEnv *env, jclass type) {
+extern "C" JNIEXPORT jboolean JNICALL
+Java_com_ece420_lab3_AudioActivity_createSLBufferQueueAudioPlayer(JNIEnv *env, jclass type) {
     SampleFormat sampleFormat;
     memset(&sampleFormat, 0, sizeof(sampleFormat));
     sampleFormat.pcmFormat_ = (uint16_t)engine.bitsPerSample_;
@@ -129,16 +129,16 @@ Java_com_ece420_lab3_MainActivity_createSLBufferQueueAudioPlayer(JNIEnv *env, jc
     return JNI_TRUE;
 }
 
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_deleteSLBufferQueueAudioPlayer(JNIEnv *env, jclass type) {
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_deleteSLBufferQueueAudioPlayer(JNIEnv *env, jclass type) {
     if(engine.player_) {
         delete engine.player_;
         engine.player_= nullptr;
     }
 }
 
-JNIEXPORT jboolean JNICALL
-Java_com_ece420_lab3_MainActivity_createAudioRecorder(JNIEnv *env, jclass type) {
+extern "C" JNIEXPORT jboolean JNICALL
+Java_com_ece420_lab3_AudioActivity_createAudioRecorder(JNIEnv *env, jclass type) {
     SampleFormat sampleFormat;
     memset(&sampleFormat, 0, sizeof(sampleFormat));
     sampleFormat.pcmFormat_ = static_cast<uint16_t>(engine.bitsPerSample_);
@@ -156,16 +156,16 @@ Java_com_ece420_lab3_MainActivity_createAudioRecorder(JNIEnv *env, jclass type) 
     return JNI_TRUE;
 }
 
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_deleteAudioRecorder(JNIEnv *env, jclass type) {
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_deleteAudioRecorder(JNIEnv *env, jclass type) {
     if(engine.recorder_)
         delete engine.recorder_;
 
     engine.recorder_ = nullptr;
 }
 
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_startPlay(JNIEnv *env, jclass type) {
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_startPlay(JNIEnv *env, jclass type) {
 
     engine.frameCount_  = 0;
     /*
@@ -178,8 +178,8 @@ Java_com_ece420_lab3_MainActivity_startPlay(JNIEnv *env, jclass type) {
     engine.recorder_->Start();
 }
 
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_stopPlay(JNIEnv *env, jclass type) {
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_stopPlay(JNIEnv *env, jclass type) {
     engine.recorder_->Stop();
     engine.player_ ->Stop();
 
@@ -189,8 +189,8 @@ Java_com_ece420_lab3_MainActivity_stopPlay(JNIEnv *env, jclass type) {
     engine.player_ = NULL;
 }
 
-JNIEXPORT void JNICALL
-Java_com_ece420_lab3_MainActivity_deleteSLEngine(JNIEnv *env, jclass type) {
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_deleteSLEngine(JNIEnv *env, jclass type) {
     delete engine.recBufQueue_;
     delete engine.freeBufQueue_;
     releaseSampleBufs(engine.bufs_, engine.bufCount_);
