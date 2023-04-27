@@ -111,8 +111,8 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
     float max = -FLT_MAX;
     //make output dB scale and find min and max
     for(int i=0; i<nfft/2; i++){
-        cleanOut[i] = (sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
-        fftOut[i] = (sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
+        cleanOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
+        fftOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
         if(fftOut[i]<min){
             min = fftOut[i];
         }
