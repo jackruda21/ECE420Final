@@ -47,7 +47,7 @@ int first_frame = 10;
 float mean = 0;
 float stDev = 0;
 
-void ece420ProcessFrame2(sample_buf *dataBuf) {
+void ece420ProcessFrame(sample_buf *dataBuf) {
     isWritingFft = false;
     // Keep in mind, we only have 20ms to process each buffer!
     struct timeval start;
@@ -259,7 +259,7 @@ kiss_fft_cpx cpx_mult(kiss_fft_cpx a, kiss_fft_cpx b){
     return result;
 }
 
-void ece420ProcessFrame(sample_buf *dataBuf) {
+void ece420ProcessFrame2(sample_buf *dataBuf) {
     isWritingFft = false;
     // Keep in mind, we only have 20ms to process each buffer!
 
