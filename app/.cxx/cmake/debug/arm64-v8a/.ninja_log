@@ -8,3 +8,11 @@
 24	764	704347360	CMakeFiles/echo.dir/audio_main.cpp.o	e2d8e11a70764de3
 19	774	704347360	CMakeFiles/echo.dir/audio_recorder.cpp.o	4cdfee289d179f
 775	937	704347360	C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libecho.so	17fe1dbd4f6dc039
+3	486	704348355	CMakeFiles/echo.dir/audio_recorder.cpp.o	4cdfee289d179f
+7	498	704348355	CMakeFiles/echo.dir/audio_main.cpp.o	e2d8e11a70764de3
+2	4260	704348380	CMakeFiles/echo.dir/ece420_main.cpp.o	a4e91489c5e6049c
+4261	4604	704348380	C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libecho.so	17fe1dbd4f6dc039
+9	452	704348627	CMakeFiles/echo.dir/audio_main.cpp.o	e2d8e11a70764de3
+3	453	704348627	CMakeFiles/echo.dir/audio_recorder.cpp.o	4cdfee289d179f
+3	4145	704348640	CMakeFiles/echo.dir/ece420_main.cpp.o	a4e91489c5e6049c
+4145	4473	704348641	C:/Users/jayra/Desktop/SchoolLocal/Sp23/ECE420/Final-Android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libecho.so	17fe1dbd4f6dc039

@@ -48,8 +48,7 @@ void AudioRecorder::ProcessSLCallback(SLAndroidSimpleBufferQueueItf bq) {
     } else if (appFlag == 2){
         specGate(dataBuf);
     } else if (appFlag == 3){
-        specSub(dataBuf);
-        //wiener(dataBuf);
+        wiener(dataBuf);
     }
 
     recQueue_->push(dataBuf);
