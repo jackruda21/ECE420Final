@@ -47,7 +47,7 @@ int first_frame = 10;
 float mean = 0;
 float stDev = 0;
 
-void ece420ProcessFrame(sample_buf *dataBuf) {
+void ece420ProcessFrame2(sample_buf *dataBuf) {
     isWritingFft = false;
     // Keep in mind, we only have 20ms to process each buffer!
     struct timeval start;
@@ -219,7 +219,7 @@ void ece420ProcessFrame(sample_buf *dataBuf) {
 }
 
 //number of frames we need to store to train filter
-#define FRAMES_STORED 10
+#define FRAMES_STORED 20
 
 //file-scope variables for wiener filtering
 int frame_count_rec = 0;
@@ -236,7 +236,7 @@ int filter_flag = 0;
 
 //TEST VARIABLES, REMOVE
 int recording_clean = 1;
-int wiener_start = 1;
+int wiener_start = 0;
 
 //variable to hold our filter
 kiss_fft_cpx wiener_filter[FRAME_SIZE * ZP_FACTOR] = {};
@@ -259,7 +259,7 @@ kiss_fft_cpx cpx_mult(kiss_fft_cpx a, kiss_fft_cpx b){
     return result;
 }
 
-void wienerFilter(sample_buf *dataBuf) {
+void ece420ProcessFrame(sample_buf *dataBuf) {
     isWritingFft = false;
     // Keep in mind, we only have 20ms to process each buffer!
 
@@ -273,6 +273,79 @@ void wienerFilter(sample_buf *dataBuf) {
     for(int i =0; i<FRAME_SIZE;i++){
         bufferIn[i] = bufferIn[i] * .54 - .46*cos((2*M_PI*i)/(FRAME_SIZE-1));
     }
+
+
+    //store 10 frames of clean recorded audio data when rec. button is pressed
+    if(recording_clean){
+        LOGD("rec_count: %d", frame_count_rec);
+        if(frame_count_rec < FRAMES_STORED){
+            for(int i=0; i<FRAME_SIZE; i++){
+                clean_frames[frame_count_rec * FRAME_SIZE + i] = bufferIn[i];
+            }
+            frame_count_rec++;
+        }
+        if(frame_count_rec == FRAMES_STORED){
+            recording_clean = 0;
+            wiener_start = 1;
+        }
+    }
+
+    //store 10 frames of noisy audio data once start is pressed
+    if(wiener_start){
+        //record 1st 10 frames of data
+        LOGD("start_count: %d", frame_count_start);
+        if(frame_count_start < FRAMES_STORED){
+            for(int i=0; i<FRAME_SIZE; i++){
+                noise_frames[frame_count_start * FRAME_SIZE + i] = bufferIn[i];
+            }
+            frame_count_start++;
+            filter_flag = 0;
+        }
+        if(frame_count_start == FRAMES_STORED){
+            filter_flag = 1;
+            wiener_start = 0;
+        }
+    }
+
+        //after recording those frames, process the filter
+
+    if(filter_flag){
+        LOGD("Filtering...");
+        //process recorded data and create filter
+        // The following were too big to be allocated on the stack so are globals instead
+        Eigen::MatrixXf A(10000,10);
+        Eigen::MatrixXf h(10,1);
+        Eigen::MatrixXf x(10000,1);
+        for(int i = 0; i<10000; i++){
+            for(int j = 0; j<10; j++){
+                A(i,j) = noise_frames[i+j];
+            }
+            x(i,0) = clean_frames[i];
+        }
+
+        //h is our filter coefficients
+        h = (A.transpose() * A).inverse() * A.transpose() * x;
+        //A = A.inverse();
+
+        //fft the filter
+        int nfft_filter = FRAME_SIZE * ZP_FACTOR;
+        int is_inverse_fft_filter = 0;
+        kiss_fft_cpx cx_in_filter[10] = {};   //input to be FFT'd
+
+        kiss_fft_cfg cfg = kiss_fft_alloc( nfft_filter ,is_inverse_fft_filter,0,0);
+
+        for(int i=0; i<10; i++){
+            // put kth sample in cx_in[k].r and cx_in[k].i
+            cx_in_filter[i].r = h(i,0);
+            cx_in_filter[i].i = 0;
+        }
+        //perform fft, only required for output spectrogram
+        kiss_fft( cfg , cx_in_filter , wiener_filter );
+        //our filter is now in the file-scope variable wiener_filter to be used for processing
+        free(cfg);
+        filter_flag = 0;
+    }
+
     //zero pad
     float s_pad[FRAME_SIZE * ZP_FACTOR] = {};
 
@@ -301,109 +374,28 @@ void wienerFilter(sample_buf *dataBuf) {
     kiss_fft( cfg , cx_in , cx_out );
     free(cfg);
 
-    //store 10 frames of clean recorded audio data when rec. button is pressed
+    //filter input data
 
-    if(recording_clean){
-        if(frame_count_rec < FRAMES_STORED){
-            for(int i=0; i<FRAME_SIZE; i++){
-                clean_frames[frame_count_rec * FRAME_SIZE + i] = bufferIn[i];
-            }
-            frame_count_rec++;
+    float max = -FLT_MAX;
+    float cleanMax = -FLT_MAX;
+    kiss_fft_cpx temp;
+    for (int i = 0; i < nfft/2; i++) {
+        temp = cpx_mult(cx_out[i], wiener_filter[i]);
+        fftOut[i] = 20*log10(sqrt(temp.r * temp.r + temp.i * temp.i));
+        cleanOut[i] = 20*log10(sqrt(cx_out[i].r * cx_out[i].r + cx_out[i].i * cx_out[i].i));
+        if(fftOut[i]>max){
+            max = fftOut[i];
+        }
+        if(cleanOut[i]>cleanMax){
+            cleanMax = cleanOut[i];
         }
     }
 
-    //store 10 frames of noisy audio data once start is pressed
-    if(wiener_start){
-        //record 1st 10 frames of data
-        if(frame_count_start < FRAMES_STORED){
-            for(int i=0; i<FRAME_SIZE; i++){
-                noise_frames[frame_count_start * FRAME_SIZE + i] = bufferIn[i];
-            }
-            frame_count_start++;
-            filter_flag = 0;
-        }
-
-        //after recording those frames, process the filter
-        else{
-            if(!filter_flag){
-                //process recorded data and create filter
-                // The following were too big to be allocated on the stack so are globals instead
-                Eigen::MatrixXf A(10000,10);
-                Eigen::MatrixXf h(10,1);
-                Eigen::MatrixXf x(10000,1);
-                for(int i = 0; i<10000; i++){
-                    for(int j = 0; j<10; j++){
-                        A(i,j) = noise_frames[i+j];
-                    }
-                    x(i,0) = clean_frames[i];
-                }
-
-                //h is our filter coefficients
-                h = (A.transpose() * A).inverse() * A.transpose() * x;
-                //A = A.inverse();
-
-                int nfft_filter = FRAME_SIZE * ZP_FACTOR;
-                int is_inverse_fft_filter = 0;
-                kiss_fft_cpx cx_in_filter[10] = {};   //input to be FFT'd
-
-                kiss_fft_cfg cfg = kiss_fft_alloc( nfft_filter ,is_inverse_fft_filter,0,0);
-
-                for(int i=0; i<10; i++){
-                    // put kth sample in cx_in[k].r and cx_in[k].i
-                    cx_in_filter[i].r = h(i,0);
-                    cx_in_filter[i].i = 0;
-                }
-                //perform fft, only required for output spectrogram
-                kiss_fft( cfg , cx_in_filter , wiener_filter );
-                //our filter is know in the file-scope variable wiener_filter to be used for processing
-                free(cfg);
-                filter_flag = 1;
-            }
-            if(filter_flag){
-                //filter input data
-
-                float max = -FLT_MAX;
-                kiss_fft_cpx temp;
-                for (int i = 0; i < nfft/2; i++) {
-                    temp = cpx_mult(cx_out[i], wiener_filter[i]);
-                    fftOut[i] = 20*log10(sqrt(temp.r * temp.r + temp.i * temp.i));
-                    if(fftOut[i]>max){
-                        max = fftOut[i];
-                    }
-                }
-
-                //normalize values
-                for (int i = 0; i < nfft/2; i++) {
-                    fftOut[i] = fftOut[i]/max;
-                }
-
-            }
-        }
+    //normalize values
+    for (int i = 0; i < nfft/2; i++) {
+        fftOut[i] = fftOut[i]/max;
+        cleanOut[i] = cleanOut[i]/cleanMax;
     }
-
-/*
-#Wiener filtering algorithm, based on https://github.com/GuitarsAI/ADSP_Tutorials/blob/master/ADSP_12_Wiener_Filter.ipynb
-x=np.matrix(speech).T
-y=np.matrix(noisy).T
-
-#we assume 10 coefficients for our Wiener filter.
-#10 to 12 is a good number for speech signals.
-A = np.matrix(np.zeros((10000, 10)))
-for m in range(10000):
-    A[m,:] = y[m+np.arange(10)].T
-#Our matrix has 100000 rows and 10 colums:
-
-#Compute Wiener Filter:
-#Trick: allow (flipped) filter delay of 5 samples to get better working denoising.
-#This corresponds to the center of our Wiener filter.
-#The desired signal hence is x[5:100005].
-h=np.linalg.inv(A.T*A)*A.T*x[5:10000+5]
-
-# Frequency Response
-w, h_response  = signal.freqz(np.flipud(h))
-
-xw = signal.lfilter(np.array(np.flipud(h).T)[0],[1],np.array(y.T)[0])
-*/
 }
 
 // http://stackoverflow.com/questions/34168791/ndk-work-with-floatbuffer-as-parameter

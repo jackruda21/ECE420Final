@@ -1,20 +1,20 @@
 {
   "buildFiles": [
-    "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\platforms.cmake",
-    "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\ndk-stl-config.cmake",
-    "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\android.toolchain.cmake",
-    "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\src\\main\\cpp\\CMakeLists.txt"
+    "C:\\Users\\jayra\\Desktop\\SchoolLocal\\Sp23\\ECE420\\Final-Android\\app\\src\\main\\cpp\\ndk-stl-config.cmake",
+    "C:\\Users\\jayra\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\jayra\\Desktop\\SchoolLocal\\Sp23\\ECE420\\Final-Android\\app\\src\\main\\cpp\\CMakeLists.txt",
+    "C:\\Users\\jayra\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669\\build\\cmake\\android.toolchain.cmake"
   ],
   "cleanCommands": [
-    "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\.cxx\\cmake\\debug\\x86\" clean"
+    "C:\\Users\\jayra\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\jayra\\Desktop\\SchoolLocal\\Sp23\\ECE420\\Final-Android\\app\\.cxx\\cmake\\debug\\x86\" clean"
   ],
-  "buildTargetsCommand": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\.cxx\\cmake\\debug\\x86\" {LIST_OF_TARGETS_TO_BUILD}",
+  "buildTargetsCommand": "C:\\Users\\jayra\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\jayra\\Desktop\\SchoolLocal\\Sp23\\ECE420\\Final-Android\\app\\.cxx\\cmake\\debug\\x86\" {LIST_OF_TARGETS_TO_BUILD}",
   "libraries": {
     "echo-Debug-x86": {
       "artifactName": "echo",
-      "buildCommand": "C:\\Users\\cardi\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\.cxx\\cmake\\debug\\x86\" echo",
+      "buildCommand": "C:\\Users\\jayra\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\jayra\\Desktop\\SchoolLocal\\Sp23\\ECE420\\Final-Android\\app\\.cxx\\cmake\\debug\\x86\" echo",
       "abi": "x86",
-      "output": "C:\\Users\\cardi\\Documents\\senior_22-23\\ECE420\\ECE420Final\\app\\build\\intermediates\\cmake\\debug\\obj\\x86\\libecho.so",
+      "output": "C:\\Users\\jayra\\Desktop\\SchoolLocal\\Sp23\\ECE420\\Final-Android\\app\\build\\intermediates\\cmake\\debug\\obj\\x86\\libecho.so",
       "runtimeFiles": []
     }
   }

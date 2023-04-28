@@ -1,0 +1,7 @@
+Executable : C:\Users\jayra\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\ninja.exe
+arguments : 
+-C
+C:\Users\jayra\Desktop\SchoolLocal\Sp23\ECE420\Final-Android\app\.cxx\cmake\debug\armeabi-v7a
+echo
+jvmArgs : 
+
