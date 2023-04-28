@@ -11,6 +11,8 @@
 #include "debug_utils.h"
 #include "buf_manager.h"
 
-void ece420ProcessFrame(sample_buf *dataBuf);
+void specSub(sample_buf *dataBuf);
+void specGate(sample_buf *dataBuf);
+//void wiener(sample_buf *dataBuf);
 
 #endif //ECE420_MAIN_H

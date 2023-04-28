@@ -84,7 +84,6 @@ public class AudioActivity extends Activity
         super.setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
-
         textFiltered = (TextView) findViewById(R.id.unfiltered);
         if(MainActivity.appFlag == 1) textFiltered.setText("Spectral Subtraction");
         else if(MainActivity.appFlag == 2) textFiltered.setText("Spectral Gating");
@@ -166,6 +165,7 @@ public class AudioActivity extends Activity
     }
 
     private void startEcho() {
+        passAppFlag(MainActivity.appFlag);
         if(!supportRecording){
             return;
         }
@@ -431,4 +431,6 @@ public class AudioActivity extends Activity
 
     public static native void getFftBuffer(FloatBuffer buffer);
     public static native void getFftBufferClean(FloatBuffer buffer);
+
+    public static native void passAppFlag(int flag);
 }

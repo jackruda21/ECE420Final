@@ -21,6 +21,13 @@
  * bqRecorderCallback(): called for every buffer is full;
  *                       pass directly to handler
  */
+int appFlag = 1;
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_ece420_lab3_AudioActivity_passAppFlag(JNIEnv *env, jclass, jint myInt){
+    appFlag = myInt;
+}
+
 void bqRecorderCallback(SLAndroidSimpleBufferQueueItf bq, void *rec) {
     (static_cast<AudioRecorder *>(rec))->ProcessSLCallback(bq);
 }
@@ -36,7 +43,14 @@ void AudioRecorder::ProcessSLCallback(SLAndroidSimpleBufferQueueItf bq) {
     dataBuf->size_ = dataBuf->cap_;           //device only calls us when it is really full
 
     // Call ece420 methods to modify dataBuf contents before push to play
-    ece420ProcessFrame(dataBuf);
+    if (appFlag == 1) {
+        specSub(dataBuf);
+    } else if (appFlag == 2){
+        specGate(dataBuf);
+    } else if (appFlag == 3){
+        specSub(dataBuf);
+        //wiener(dataBuf);
+    }
 
     recQueue_->push(dataBuf);
 
